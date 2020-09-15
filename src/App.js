@@ -8,7 +8,9 @@ function App() {
   return (
     <div className="App">
       <Customer/>
+      <hr/>
       <BasketList/>
+      <hr/>
       <BasketEntry/>
     </div>
   );

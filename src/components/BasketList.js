@@ -58,7 +58,7 @@ class ConnectedBasketList extends React.Component {
                                         <td>{item.productName}</td>
                                         <td>{item.count}</td>
                                         <td>{formatMoney(item.unitPrice)}</td>
-                                        <td><button id={item.id} onClick={this.handleRemove}>Remove</button></td>
+                                        <td><button className="btn btn-primary" id={item.id} onClick={this.handleRemove} tabIndex="-1">Remove</button></td>
                                     </tr>
                                 )
                             )

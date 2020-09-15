@@ -27,7 +27,8 @@ class ConnectedCustomer extends React.Component {
         this.setState({ [event.target.id]: event.target.value });
     } 
 
-    handleCreate() {
+    handleCreate(event) {
+        event.preventDefault();
         axios.put(`http://localhost:8080/api/v1/baskets/${this.state.customerId}`).then(res => {
             console.log(res);
             const items = res.data.items === null ? [] : res.data.items
@@ -36,7 +37,8 @@ class ConnectedCustomer extends React.Component {
         this.props.selectBasket(this.state.customerId);
     }
 
-    handleGet() {
+    handleGet(event) {
+        event.preventDefault();
         axios.get(`http://localhost:8080/api/v1/baskets/${this.state.customerId}/items`).then(res => {
             console.log(res);
             const items = res.data.items === null ? [] : res.data.items
@@ -49,11 +51,19 @@ class ConnectedCustomer extends React.Component {
         return (
             <div>
                 <p>This simulates customer creation and login.</p>
-                <p>Clicking the Create button creates the customer basket. Clicking the Get button gets an existing customer basket</p>
-                <label htmlFor="customerId">Customer ID</label>
-                <input id="customerId" type="number" value={this.state.customerId} onChange={this.handleChange} tabIndex="1" autoFocus placeholder="Enter ID..." />
-                <button onClick={this.handleCreate} tabIndex="2" disabled = {this.state.customerId === ""}>Create Basket</button>
-                <button onClick={this.handleGet} tabIndex="3" disabled = {this.state.customerId === ""}>Get Basket</button>
+                <p>Click the Create button to create the customer basket. Enter ID and press Tab to get the contents of an existing customer basket.</p>
+                <h3>Customer</h3>
+                <form className="form-horizontal">
+                    <div className="form-group row">
+                        <label className="col-sm-2 col-form-label" htmlFor="customerId">Customer ID</label>
+                        <div className="col-sm-2">
+                            <input className="form-control" id="customerId" type="number" value={this.state.customerId} onChange={this.handleChange} onBlur={this.handleGet} tabIndex="1" autoFocus placeholder="Enter ID..." />
+                        </div>
+                        <div className="col-auto">
+                            <button className="btn btn-primary" onClick={this.handleCreate} tabIndex="-1" disabled = {this.state.customerId === ""}>Create Basket</button>
+                        </div>                                               
+                    </div>
+                </form>
             </div>
         )
     }
